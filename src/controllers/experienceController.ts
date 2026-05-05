@@ -1,6 +1,7 @@
 import { Request, Response } from 'express'
 import mongoose from 'mongoose'
-import Experience from '../models/Experience'
+import Experience from '../models/experience'
+
 
 export const createExperience = async (req: Request, res: Response) => {
   try {
