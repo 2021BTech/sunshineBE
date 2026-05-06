@@ -16,8 +16,8 @@ const experienceSchema = new mongoose.Schema({
     type: String,
     required: [true, 'Theme is required'],
     enum: {
-      values: ['romantic', 'calm', 'playful'],
-      message: 'Theme must be romantic, calm, or playful'
+      values: ['romantic', 'calm', 'playful', 'birthday', 'anniversary'],
+      message: 'Theme must be romantic, calm, playful, birthday, or anniversary'
     }
   },
   audioUrl: {

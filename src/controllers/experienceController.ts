@@ -20,8 +20,8 @@ export const createExperience = async (req: Request, res: Response) => {
       errors.push('Message is required and must be a non-empty string')
     }
     
-    if (!theme || !['romantic', 'calm', 'playful'].includes(theme)) {
-      errors.push('Theme must be one of: romantic, calm, playful')
+    if (!theme || !['romantic', 'calm', 'playful', 'birthday', 'anniversary'].includes(theme)) {
+      errors.push('Theme must be one of: romantic, calm, playful, birthday, or anniversary')
     }
     
     if (!scheduledAt) {
