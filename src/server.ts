@@ -19,7 +19,7 @@ app.use(
       "http://localhost:3000",
       "http://localhost:5173",
       "https://sunshinebe.onrender.com",
-      "https://ssunshine.netlify.app",
+      "https://appsunrise.netlify.app",
     ],
     credentials: true,
   }),
