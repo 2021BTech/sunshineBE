@@ -1,6 +1,7 @@
 import express from 'express'
 import cors from 'cors'
 import dotenv from 'dotenv'
+import mongoose from 'mongoose'
 import connectDB from './config/database'
 import experienceRoutes from './routes/experienceRoutes'
 import uploadRoutes from './routes/uploadRoutes'
@@ -13,7 +14,7 @@ const PORT = process.env.PORT || 5000
 
 // Middleware
 app.use(cors({
-  origin: ['http://localhost:3000', 'http://localhost:5173'],
+  origin: ['http://localhost:3000', 'http://localhost:5173', 'https://sunshinebe.onrender.com'],
   credentials: true
 }))
 app.use(express.json({ limit: '10mb' }))
@@ -34,10 +35,20 @@ app.use('/api/upload', uploadRoutes)
 
 // Health check
 app.get('/health', (req, res) => {
+  const dbState = mongoose.connection.readyState;
+  const dbStatus = {
+    0: 'disconnected',
+    1: 'connected',
+    2: 'connecting',
+    3: 'disconnected'
+  };
+  
   res.json({ 
-    status: 'ok', 
-    timestamp: new Date(),
-    mongodb: mongoose.connection.readyState === 1 ? 'connected' : 'disconnected'
+    status: 'ok',
+    timestamp: new Date().toISOString(),
+    uptime: process.uptime(),
+    mongodb: dbStatus[dbState as keyof typeof dbStatus] || 'unknown',
+    environment: process.env.NODE_ENV || 'development'
   })
 })
 
@@ -48,9 +59,6 @@ app.use(errorHandler)
 app.use((req, res) => {
   res.status(404).json({ message: 'Route not found' })
 })
-
-// Import mongoose for health check
-import mongoose from 'mongoose'
 
 app.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`)
